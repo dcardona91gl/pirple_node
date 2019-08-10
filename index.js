@@ -93,7 +93,7 @@ const unifiedServer = (req, res) => {
 
 const getMessage = () => {
   const random = Math.floor(Math.random() * messages.length);
-  return {'message': messages[random].message}
+  return {'welcomeMsessage': messages[random].message}
 };
 
 // Define all the handlers
