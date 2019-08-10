@@ -10,6 +10,7 @@ const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const fs = require('fs');
+const messages = require('./welcomeMessages.json');
 
  // Instanciating the http server
 const httpServer = http.createServer(function(req,res){
@@ -89,13 +90,22 @@ const unifiedServer = (req, res) => {
 
   });
 }
+
+const getMessage = () => {
+  const random = Math.floor(Math.random() * messages.length);
+  return {'Welcome Message': messages[random].message}
+};
+
 // Define all the handlers
 const handlers = {
   'ping': (data,callback) => {callback(200)},
+  'hello': (data,callback) => {callback(200, getMessage())},
   'notFound': (data,callback) => {callback(404)}
 };
 
 // Define the request router
 const router = {
-  'ping': handlers.ping
+  'ping': handlers.ping,
+  'hello': handlers.hello
 };
+
