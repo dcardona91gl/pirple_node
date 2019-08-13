@@ -51,10 +51,10 @@ const unifiedServer = (req, res) => {
   // Get the payload,if any
   const decoder = new StringDecoder('utf-8');
   let buffer = '';
-  req.on('data', function(data) {
-      buffer += decoder.write(data);
-  });
-  req.on('end', function() {
+
+  req.on('data', data => buffer += decoder.write(data));
+
+  req.on('end', ()=>{
       buffer += decoder.end();
 
       // Check the router for a matching path for a handler. If one is not found, use the notFound handler instead.
@@ -85,8 +85,6 @@ const unifiedServer = (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.writeHead(statusCode);
         res.end(payloadString);
-        console.log("Returning this response: ",statusCode,payloadString);
-
       });
 
   });
